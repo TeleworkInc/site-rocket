@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const chokidar = require('chokidar');
 const { insideProject, error, success, BackgroundCommand, callGatsby } = require('../utils/processes');
 
-// chokidar.watch('dev').on('all', (event, path) => {});
+chokidar.watch('dev').on('all', console.log);
 
 process.on('message', async (msg) => {
     if (msg.command != 'run') return;
@@ -20,5 +20,6 @@ module.exports = async () => {
     await process.on('SIGINT', () => {
         error("\nCaught SIGINT! Killing child processes, including running servers.");
         process.kill(-background.pid);
+        process.exit();
     });
 }
