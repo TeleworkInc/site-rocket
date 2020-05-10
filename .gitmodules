@@ -1,3 +1,6 @@
 [submodule "LICENSE"]
 	path = LICENSE
 	url = https://github.com/TeleworkInc/LICENSE
+[submodule ".LICENSE"]
+	path = .LICENSE
+	url = https://github.com/TeleworkInc/.LICENSE.git
