@@ -2,15 +2,34 @@ const process = require('process');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const { insideProject, error, success, BackgroundCommand, callGatsby } = require('../utils/processes');
+const { build, compile } = require('yamlayout');
 
-chokidar.watch('dev').on('all', console.log);
+const debounce = (func, delay) => {
+    let inDebounce
+    return function() {
+        const context = this
+        const args = arguments
+        clearTimeout(inDebounce)
+        inDebounce = setTimeout(() => func.apply(context, args), delay)
+    }
+}
 
-process.on('message', async (msg) => {
+// don't flag initial adds
+chokidar
+    .watch('dev', {
+        ignoreInitial: true,
+        awaitWriteFinish: true,
+    })
+    .on('all', debounce((type, file, stats) => {
+        console.log(type, file);
+    }, 100));
+
+process.on('message', async(msg) => {
     if (msg.command != 'run') return;
     await callGatsby('develop');
 });
 
-module.exports = async () => {
+module.exports = async() => {
     if (!insideProject()) return error('Not inside a Site Rocket project.');
     const background = new BackgroundCommand('dev', { silent: false }).open();
 

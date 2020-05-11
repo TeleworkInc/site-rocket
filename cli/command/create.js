@@ -109,6 +109,7 @@ module.exports = async (name) => {
         error("Caught SIGINT! Killing child processes, including running servers.");
         failed = true;
         process.kill(-background.pid);
+        process.exit();
     });
     await background.on('exit', async() => {
         if(!failed) displaySuccess(name);

@@ -29,12 +29,16 @@ class BackgroundCommand {
     }
 }
 
-const callGatsby = async (cmd) => {
+const callGatsby = (cmd) => {
     // stored in PROJECT/build
-    process.chdir('./build');
+    const buildDir = path.resolve(process.cwd(), 'build');
+    
+    process.chdir(buildDir);
 
     // call gatsby command
-    await gatsbyCli('__' + cmd);
+    gatsbyCli('__' + cmd);
+
+    // process.chdir(path.resolve(buildDir, '..'));
 }
 
 const sendStatus = async (state) => await process.send({
