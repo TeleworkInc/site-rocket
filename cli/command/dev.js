@@ -14,18 +14,16 @@ const debounce = (func, delay) => {
     }
 }
 
+const compileProject = () => build('./dev', {
+    outputDir: './build/src'
+});
+
 // don't flag initial adds
 chokidar
     .watch('dev', {
         ignoreInitial: true,
-        // awaitWriteFinish: true,
     })
-    .on('all', (type, file, path) => {
-        console.log(file);
-        build('./dev', {
-            outputDir: './build/src'
-        });
-    });
+    .on('all', compileProject);
 
 process.on('message', async(msg) => {
     if (msg.command != 'run') return;
@@ -37,6 +35,8 @@ module.exports = async() => {
     const background = new BackgroundCommand('dev', { silent: false }).open();
 
     console.log("\nPreparing development bundle. Use", chalk.bgBlue(' site-rocket build '), "to create a production build.\n");
+
+    compileProject();
 
     await background.send({ command: 'run' });
     await process.on('SIGINT', () => {
