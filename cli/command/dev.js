@@ -4,16 +4,6 @@ const chokidar = require('chokidar');
 const { insideProject, error, success, BackgroundCommand, callGatsby } = require('../utils/processes');
 const { build, compile } = require('yamlayout');
 
-const debounce = (func, delay) => {
-    let inDebounce
-    return function() {
-        const context = this
-        const args = arguments
-        clearTimeout(inDebounce)
-        inDebounce = setTimeout(() => func.apply(context, args), delay)
-    }
-}
-
 const compileProject = () => build('./dev', {
     outputDir: './build/src'
 });
@@ -31,7 +21,9 @@ process.on('message', async(msg) => {
 });
 
 module.exports = async() => {
-    if (!insideProject()) return error('Not inside a Site Rocket project.');
+    if (!insideProject())
+        return error('Not inside a Site Rocket project.');
+        
     const background = new BackgroundCommand('dev', { silent: false }).open();
 
     console.log("\nPreparing development bundle. Use", chalk.bgBlue(' site-rocket build '), "to create a production build.\n");

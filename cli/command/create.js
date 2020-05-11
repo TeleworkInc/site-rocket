@@ -1,5 +1,6 @@
 const process = require('process');
 const fs = require('fs');
+const path = require('path');
 const touch = require('touch');
 const execa = require('execa');
 const chalk = require('chalk');
@@ -51,14 +52,10 @@ const init = async(name) => {
     setGatsbyPMPreference();
     await sendStatus('newGatsbyProject');
 
-    // set up project structure
-    // fs.mkdirSync(`./${name}`);
-    // for (let subdir of['pages', 'components'])
-    //     fs.mkdirSync(`./${name}/${subdir}`);
-
     console.log("Setting up Site Rocket project structure...");    
     const url = 'https://github.com/TeleworkInc/site-rocket-default.git',
-          args = ['clone', '--recurse-submodules', url, name];
+          args = ['clone', '--recurse-submodules', '--depth=1', url, name];
+    
     await spawnWithArgs('git', args);
 
     await initStarter(
@@ -106,9 +103,11 @@ module.exports = async (name) => {
         }
     });
     await process.on('SIGINT', () => {
-        error("Caught SIGINT! Killing child processes, including running servers.");
         failed = true;
+        
         process.kill(-background.pid);
+        error("Caught SIGINT! Killing child processes, including running servers.");
+        
         process.exit();
     });
     await background.on('exit', async() => {

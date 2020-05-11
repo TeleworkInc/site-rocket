@@ -7,8 +7,16 @@ const gatsbyCli = require('gatsby-cli/lib/create-cli');
 
 const chalk = require('chalk');
 const insideProject = () => fs.existsSync('.rocket');
-const error = (msg) => console.log('\n', chalk.bold.red('ERROR! ') + msg);
-const success = (msg) => console.log(chalk.bold.blue('SUCCESS! ') + msg);
+
+const error = (msg) => {
+    console.log('\n', chalk.bold.red('ERROR! ') + msg);
+    process.exit(1);
+}
+
+const success = (msg) => {
+    console.log(chalk.bold.blue('SUCCESS! ') + msg);
+    process.exit(0);
+}
 
 class BackgroundCommand {
     constructor (cmd, args = {}) {
