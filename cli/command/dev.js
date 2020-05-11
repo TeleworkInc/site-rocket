@@ -18,11 +18,14 @@ const debounce = (func, delay) => {
 chokidar
     .watch('dev', {
         ignoreInitial: true,
-        awaitWriteFinish: true,
+        // awaitWriteFinish: true,
     })
-    .on('all', debounce((type, file, stats) => {
-        console.log(type, file);
-    }, 100));
+    .on('all', (type, file, path) => {
+        console.log(file);
+        build('./dev', {
+            outputDir: './build/src'
+        });
+    });
 
 process.on('message', async(msg) => {
     if (msg.command != 'run') return;

@@ -15,11 +15,6 @@ module.exports = async(closeOnFinish = true) => {
 
     await background.send({ command: 'run' });
     await background.on('exit', () => closeOnFinish ? process.exit() : false);
-    // await background.on('exit', () => console.log(
-    //     chalk.blueBright("\nSUCCESS!"),
-    //     "Start the production server with:",
-    //     chalk.bold.blue("site-rocket serve")
-    // ));
     await process.on('SIGINT', () => {
         error("\nCaught SIGINT! Killing child processes, including running servers.");
         process.kill(-background.pid);
