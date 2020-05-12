@@ -1,5 +1,5 @@
 const process = require('process');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const touch = require('touch');
 const execa = require('execa');
@@ -46,7 +46,7 @@ const setGatsbyPMPreference = () => {
     fs.writeFileSync(configLocation, JSON.stringify(gatsbyConfig));
 }
 
-const init = async(name) => {
+const init = async (name) => {
 
     await sendStatus('settingPreferences');
     setGatsbyPMPreference();
@@ -57,6 +57,7 @@ const init = async(name) => {
           args = ['clone', '--recurse-submodules', '--depth=1', url, name];
     
     await spawnWithArgs('git', args);
+    await fs.remove(path.resolve(name, `.git`))
 
     await initStarter(
         'https://github.com/TeleworkInc/yamlayout-gatsby-starter', {

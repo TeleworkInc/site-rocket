@@ -1,4 +1,5 @@
 const process = require('process');
+const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const { insideProject, error, success, BackgroundCommand, callGatsby } = require('../utils/processes');
