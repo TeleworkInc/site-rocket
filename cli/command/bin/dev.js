@@ -3,11 +3,9 @@ const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const { rocketLog, spawnGatsby, devDir, gatsbyOutputDir } = require('../../utils/processes');
-const { build, compile } = require('yamlayout');
+const yamlayout = require('yamlayout');
 
-const compileProject = async () => await build(
-    devDir, { outputDir: gatsbyOutputDir }
-);
+const compileProject = async () => await yamlayout.build();
 
 const gatsbyDevelop = async (public = false) => {
     const developArgs = public ? ['--host=0.0.0.0'] : [];
@@ -23,9 +21,6 @@ const dev = async(public = false) => {
         .on('all', compileProject);
 
     rocketLog("Preparing development bundle...");
-
-    // console.log(chalk.bold.blue("\nPreparing development bundle."), 
-    // "\nUse", chalk.bgBlue(' site-rocket build '), "to create a production build.\n");
 
     await compileProject();
     await gatsbyDevelop(public);
