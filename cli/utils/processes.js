@@ -36,6 +36,7 @@ const success = (msg) => {
 }
 
 const spawnGatsby = async (...args) => {
+    fs.mkdirSync(gatsbyDir, { recursive: true });
     process.chdir(gatsbyDir);
     await spawn('gatsby', args);
     process.chdir('..');
