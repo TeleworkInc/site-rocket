@@ -1,17 +1,19 @@
-const child_process = require('child_process');
 const fs = require('fs');
 const process = require('process');
 const execa = require('execa');
 const path = require('path');
-const gatsbyCli = require('gatsby-cli/lib/create-cli');
-
 const chalk = require('chalk');
+
 const insideProject = () => fs.existsSync('.rocket');
 
 const gracefulExit = (code = 0) => {
     process.kill(-process.pid);
     process.exit(code);
 }
+
+const devDir = path.resolve('./dev'),
+      gatsbyDir = path.resolve('./build'),
+      gatsbyOutputDir = path.resolve(gatsbyDir, 'src');
 
 const spawn = async(
     file,
@@ -29,48 +31,22 @@ const success = (msg) => {
     gracefulExit(0);
 }
 
-class BackgroundCommand {
-    constructor (cmd, args = {}) {
-        this.cmd = cmd;
-        this.silent = ("silent" in args) && args.silent;
-        this.args = args;
-    }
-
-    open() {
-        return child_process.fork(
-            `${path.resolve(__dirname, '..')}/command/${this.cmd}.js`,
-            this.args instanceof Array ? this.args : [this.args], 
-            {
-                detached: true,
-                silent: this.silent
-            }
-        );
-    }
+const spawnGatsby = async (...args) => {
+    process.chdir(gatsbyDir);
+    await spawn('gatsby', args);
 }
 
-const callGatsby = (cmd) => {
-
-    // stored in PROJECT/build
-    const buildDir = path.resolve(process.cwd(), 'build');
-    process.chdir(buildDir);
-
-    // call gatsby command
-    gatsbyCli('__' + cmd);
-    
-}
-
-const sendStatus = async (state) => await process.send({
-    success: true,
-    state: state
-});
+const rocketLog = msg => console.log(chalk.blue("\n[SITE ROCKET]", chalk.bold.blue(msg)));
 
 module.exports = {
-    BackgroundCommand,
+    devDir,
+    gatsbyDir,
+    gatsbyOutputDir,
+    rocketLog,
     insideProject,
     gracefulExit,
+    spawnGatsby,
     spawn,
     error,
     success,
-    sendStatus,
-    callGatsby
 }

@@ -11972,9 +11972,9 @@ yaml@^1.7.2, yaml@^1.8.3:
     "@babel/runtime" "^7.9.2"
 
 yamlayout@^1.0.9:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/yamlayout/-/yamlayout-1.5.0.tgz#d0be3ebe821c5ab0daa3eeb660433558f4688085"
-  integrity sha512-D206CyigzAw5iaaFdtFRQPL8vDz4TJSRrJsMMdnm8VnRWTIC0+2762oVlechUgof5dGsdNOiRr8klwNSlK1PSA==
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/yamlayout/-/yamlayout-1.6.0.tgz#b4b2aa1cae00d0aae45aaa7053861ad7524c398f"
+  integrity sha512-+ZPd4ASnKs20HcaeTSvF8rU2g1cHCxKyucjbGLtNTgn1bd0uL29Bd2WGfMEB5W3dPGNoEuAg65QegbO4N1vTZA==
   dependencies:
     chalk "^4.0.0"
     commander "^5.1.0"

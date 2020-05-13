@@ -7,8 +7,7 @@ const homedir = require('os').homedir();
 const configLocation = `${homedir}/.config/gatsby/config.json`;
 const gatsbyConfig = fs.existsSync(configLocation) ? require(configLocation) : {};
 
-const { initStarter } = require('gatsby-cli/lib/init-starter');
-const { BackgroundCommand, spawn, gracefulExit, success, error, sendStatus } = require('../utils/processes');
+const { rocketLog, spawn, gracefulExit, success, error } = require('../../utils/processes');
 
 const gatsbyStarter = async(loc) => await spawn(
     'gatsby', ['new', loc, 'https://github.com/TeleworkInc/yamlayout-gatsby-starter']
@@ -30,7 +29,7 @@ const displaySuccess = (name) => {
 
 const setGatsbyPMPreference = () => {
 
-    console.log('Setting default package manager for Gatsby...');
+    rocketLog('Setting default package manager for Gatsby...');
 
     // Set package manager to yarn
     if (!('cli' in gatsbyConfig))
@@ -42,9 +41,7 @@ const setGatsbyPMPreference = () => {
 
     fs.writeFileSync(configLocation, JSON.stringify(gatsbyConfig));
 
-    console.log(
-        `Gatsby package manager set to ${chalk.bold.blue('yarn')}.`
-    );
+    rocketLog('Gatsby package manager preference set to yarn.');
 }
 
 const setupProject = async(name) => {
@@ -52,7 +49,7 @@ const setupProject = async(name) => {
     setGatsbyPMPreference();
     const projectDir = path.resolve(name);
 
-    console.log("Setting up Site Rocket project structure...");
+    rocketLog("Setting up Site Rocket project structure...");
     const url = 'https://github.com/TeleworkInc/site-rocket-default.git',
         args = ['clone', '--recurse-submodules', '--depth=1', url, projectDir];
 
@@ -69,7 +66,7 @@ const create = async(name) => {
     if (fs.existsSync(name))
         return error(' Directory ' + chalk.bold.blue(name) + ' already exists.');
 
-    console.log('Setting up new project...');
+    rocketLog('Setting up new project...');
     await setupProject(name);
     await displaySuccess(name);
 

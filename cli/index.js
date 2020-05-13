@@ -21,10 +21,10 @@ const setupCommands = () => {
         .description('Start the development server.')
         .action(dev);
 
-    // program
-    //     .command('prod')
-    //     .description('Build and run the production server.')
-    //     .action(prod);
+    program
+        .command('prod')
+        .description('Build and run the production server.')
+        .action(prod);
 
     program
         .command('build')
