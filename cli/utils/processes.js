@@ -1,21 +1,32 @@
 const child_process = require('child_process');
-
 const fs = require('fs');
 const process = require('process');
+const execa = require('execa');
 const path = require('path');
 const gatsbyCli = require('gatsby-cli/lib/create-cli');
 
 const chalk = require('chalk');
 const insideProject = () => fs.existsSync('.rocket');
 
+const gracefulExit = (code = 0) => {
+    process.kill(-process.pid);
+    process.exit(code);
+}
+
+const spawn = async(
+    file,
+    args,
+    options
+) => await execa(file, args, { stdio: `inherit`, preferLocal: false, ...options });
+
 const error = (msg) => {
-    console.log('\n', chalk.bold.red('ERROR! ') + msg);
-    process.exit(1);
+    console.log('\n', chalk.bold.red('ERROR! ') + msg, '\n');
+    gracefulExit(1);
 }
 
 const success = (msg) => {
     console.log(chalk.bold.blue('SUCCESS! ') + msg);
-    process.exit(0);
+    gracefulExit(0);
 }
 
 class BackgroundCommand {
@@ -56,6 +67,8 @@ const sendStatus = async (state) => await process.send({
 module.exports = {
     BackgroundCommand,
     insideProject,
+    gracefulExit,
+    spawn,
     error,
     success,
     sendStatus,
