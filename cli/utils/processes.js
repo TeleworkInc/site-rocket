@@ -38,6 +38,7 @@ const success = (msg) => {
 const spawnGatsby = async (...args) => {
     process.chdir(gatsbyDir);
     await spawn('gatsby', args);
+    process.chdir('..');
 }
 
 const rocketLog = msg => console.log(chalk.blue("\n[SITE ROCKET]", chalk.bold.blue(msg)));
