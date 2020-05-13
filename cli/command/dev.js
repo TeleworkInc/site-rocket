@@ -5,9 +5,14 @@ const chokidar = require('chokidar');
 const { insideProject, spawn, error, success, BackgroundCommand, callGatsby } = require('../utils/processes');
 const { build, compile } = require('yamlayout');
 
-const compileProject = async () => await build('./dev', {
-    outputDir: './build/src'
-});
+const projectDir = path.resolve('.'),
+      devDir = path.resolve('./dev'),
+      gatsbyDir = path.resolve('./build'),
+      gatsbyOutput = path.resolve(gatsbyDir, 'src');
+
+const compileProject = async () => await build(
+    devDir, { outputDir: gatsbyOutput }
+);
 
 const gatsbyDevelop = async (public = false) => {
     var developArgs = ['develop'];
@@ -21,7 +26,7 @@ const dev = async(public = false) => {
 
     // don't flag initial adds
     chokidar
-        .watch('dev', {
+        .watch(devDir, {
             ignoreInitial: true,
         })
         .on('all', compileProject);
