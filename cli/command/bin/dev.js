@@ -2,7 +2,7 @@ const process = require('process');
 const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
-const { rocketLog, spawnGatsby, devDir, gatsbyOutputDir } = require('../../utils/processes');
+const { projectCheck, rocketLog, spawnGatsby, devDir, gatsbyOutputDir } = require('../../utils/processes');
 const yamlayout = require('yamlayout');
 
 const compileProject = async () => await yamlayout.build();
@@ -13,6 +13,9 @@ const gatsbyDevelop = async (public = false) => {
 }
 
 const dev = async(public = false) => {
+
+    // exit if not inside project
+    if(!projectCheck()) return;
 
     chokidar
         .watch(devDir, {

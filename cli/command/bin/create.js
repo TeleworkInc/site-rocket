@@ -36,12 +36,12 @@ const setGatsbyPMPreference = () => {
         gatsbyConfig.cli = {};
 
     const PMPreference = gatsbyConfig.cli.packageManager;
-    if (PMPreference != 'yarn')
-        gatsbyConfig.cli.packageManager = 'yarn';
+    if (PMPreference == 'yarn') return;
 
+    gatsbyConfig.cli.packageManager = 'yarn';
     fs.writeFileSync(configLocation, JSON.stringify(gatsbyConfig));
-
     rocketLog('Gatsby package manager preference set to yarn.');
+    
 }
 
 const setupProject = async(name) => {

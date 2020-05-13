@@ -6,6 +6,10 @@ const chalk = require('chalk');
 
 const insideProject = () => fs.existsSync('.rocket');
 
+const projectCheck = () => !insideProject()
+    ? error('Not inside a Site Rocket project.')
+    : true;
+
 const gracefulExit = (code = 0) => {
     process.kill(-process.pid);
     process.exit(code);
@@ -44,6 +48,7 @@ module.exports = {
     gatsbyOutputDir,
     rocketLog,
     insideProject,
+    projectCheck,
     gracefulExit,
     spawnGatsby,
     spawn,
