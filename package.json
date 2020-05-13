@@ -1,6 +1,6 @@
 {
   "name": "site-rocket",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A tool for creating a static site using Gatsby and YAMLayout.",
   "bin": "bin/index.js",
   "scripts": {
