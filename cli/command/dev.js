@@ -9,6 +9,14 @@ const compileProject = async () => await build('./dev', {
     outputDir: './build/src'
 });
 
+const gatsbyDevelop = async (public = false) => {
+    var developArgs = ['develop'];
+    process.chdir('build');
+
+    if (public) developArgs.push('--host=0.0.0.0');
+    await spawn('gatsby', developArgs);
+}
+
 const dev = async(public = false) => {
 
     // don't flag initial adds
@@ -21,11 +29,8 @@ const dev = async(public = false) => {
     console.log("\nPreparing development bundle. Use", chalk.bgBlue(' site-rocket build '), "to create a production build.\n");
 
     await compileProject();
-    process.chdir('build');
-
-    var developArgs = ['develop'];
-    if (public) developArgs.push('--host=0.0.0.0');
-    await spawn('gatsby', developArgs);
+    await gatsbyDevelop(public);
+    
 }
 
 module.exports = dev;
