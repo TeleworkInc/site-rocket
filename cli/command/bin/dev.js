@@ -5,12 +5,11 @@ const chokidar = require('chokidar');
 const { projectCheck, rocketLog, spawnGatsby, devDir, gatsbyOutputDir } = require('../../utils/processes');
 const yamlayout = require('yamlayout');
 
-const defaults = {
-    input: "dev",
-    outputDir: "build/src"
-}
-
-const compileProject = async (args = defaults) => await yamlayout.build(args);
+const compileCallback = async (type, name, stat) => await yamlayout.build({
+    root: devDir,
+    input: name,
+    output: gatsbyOutputDir
+});
 
 const gatsbyDevelop = async (public = false) => {
     const developArgs = public ? ['--host=0.0.0.0'] : [];
@@ -28,11 +27,16 @@ const dev = async(public = false) => {
         .watch(devDir, {
             ignoreInitial: true,
         })
-        .on('all', compileProject);
+        .on('all', compileCallback);
 
     rocketLog("Preparing development bundle...");
 
-    await compileProject();
+    await yamlayout.build({
+        input: devDir,
+        output: gatsbyOutputDir,
+        root: devDir
+    });
+
     await gatsbyDevelop(public);
     
 }
