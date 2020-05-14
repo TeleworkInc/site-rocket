@@ -1,9 +1,8 @@
 const program = require('commander');
 const process = require('process');
-const chalk = require('chalk');
 const intro = require('./utils/intro');
 
-const { build, prod, create, dev, serve } = require('./command');
+const { build, prod, create, dev, serve, clean } = require('./command');
 
 const setupCommands = () => {
 
@@ -13,8 +12,6 @@ const setupCommands = () => {
         .command('create <name>')
         .description('Create a new site.')
         .action(create);
-
-    // $ site-rocket dev
 
     program
         .command('dev')
@@ -35,6 +32,11 @@ const setupCommands = () => {
         .command('serve')
         .description('Start the production server.')
         .action(serve);
+
+    program
+        .command('clean')
+        .description('Clean up project, including cached files.')
+        .action(clean);
 
     program.parse(process.argv);
     console.log('');
