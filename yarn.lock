@@ -11972,12 +11972,13 @@ yaml@^1.7.2, yaml@^1.8.3:
     "@babel/runtime" "^7.9.2"
 
 yamlayout@^1.0.9:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/yamlayout/-/yamlayout-1.11.0.tgz#3f98436b4616b7b4de3b65982f86a5c2f73ab291"
-  integrity sha512-caqAyDpito44qvCM5FEXp4UFOXA48Zib/dRdm2KCq11PhjJl5RXHHWeGyn3qgn7D3c0ShbJwoi6I5hvm6DZpAA==
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/yamlayout/-/yamlayout-1.15.0.tgz#c94e422140cee58ef86ba7bae413fba191717c3f"
+  integrity sha512-rVjn2jc3XKhUna6YKJjVm6u6GnjjQF3W1vUNFHVtOJlDA7B0R8mthmHhUp18PUq6+42i2Czt5QOwIsbPXvB9lg==
   dependencies:
     chalk "^4.0.0"
     commander "^5.1.0"
+    html-entities "^1.3.1"
     js-yaml "^3.13.1"
     mkdirp "^1.0.4"
     react "^16.13.1"
