@@ -1,4 +1,4 @@
-const { projectCheck, rocketLog, spawnGatsby } = require('../../utils/processes');
+const { devDir, gatsbyOutputDir, projectCheck, rocketLog, spawnGatsby } = require('../../utils/processes');
 const yamlayout = require('yamlayout');
 
 const build = async() => {
@@ -7,7 +7,11 @@ const build = async() => {
     if(!projectCheck()) return;
 
     rocketLog("Building project...");
-    await yamlayout.build();
+    await yamlayout.build({
+        input: devDir,
+        output: gatsbyOutputDir,
+        root: devDir
+    });
     await spawnGatsby('build');
 
 }
