@@ -7,7 +7,7 @@ const serve = async () => {
     if(!projectCheck()) return;
 
     rocketLog("Starting production server...");
-    await spawnGatsby('serve');
+    await spawnGatsby('serve', '--host=0.0.0.0');
 }
 
 module.exports = serve;

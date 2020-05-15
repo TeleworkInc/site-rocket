@@ -11,12 +11,11 @@ const compileCallback = async (type, name, stat) => await yamlayout.build({
     output: gatsbyOutputDir
 });
 
-const gatsbyDevelop = async (public = false) => {
-    const developArgs = public ? ['--host=0.0.0.0'] : [];
-    await spawnGatsby('develop', ...developArgs);
+const gatsbyDevelop = async () => {
+    await spawnGatsby('develop', '--host=0.0.0.0');
 }
 
-const dev = async(public = false) => {
+const dev = async() => {
 
     // exit if not inside project
     // clean
