@@ -36,7 +36,7 @@ const dev = async() => {
         root: devDir
     });
 
-    await gatsbyDevelop(public);
+    await gatsbyDevelop();
     
 }
 
