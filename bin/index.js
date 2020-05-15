@@ -8,6 +8,6 @@ const { insideProject, error } = require('../cli/utils/processes');
 cli.init();
 process.on('SIGINT', () => {
     error("\nCaught SIGINT! Killing child processes, including running servers.");
-    process.kill(-process.pid);
     process.exit();
+    process.kill(-process.pid);
 });
