@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const chokidar = require('chokidar');
 const { projectCheck, rocketLog, spawnGatsby, devDir, gatsbyOutputDir } = require('../../utils/processes');
 const yamlayout = require('yamlayout');
+const clean = require('./clean');
 
 const compileCallback = async (type, name, stat) => await yamlayout.build({
     root: devDir,
@@ -20,7 +21,7 @@ const dev = async() => {
     // exit if not inside project
     // clean
     if(!projectCheck()) return;
-    await spawnGatsby('clean');
+    await clean();
 
     chokidar
         .watch(devDir, {
