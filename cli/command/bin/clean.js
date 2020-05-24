@@ -6,7 +6,7 @@ const clean = async () => {
 
     rocketLog("Cleaning project...");
     await spawnGatsby("clean");
-    rmrf('./build/src');
+    rmrf('./.build/src');
 }
 
 module.exports = clean;

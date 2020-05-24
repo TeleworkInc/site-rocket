@@ -16,7 +16,7 @@ const gracefulExit = (code = 0) => {
 }
 
 const devDir = path.resolve('./dev'),
-      gatsbyDir = path.resolve('./build'),
+      gatsbyDir = path.resolve('./.build'),
       gatsbyOutputDir = path.resolve(gatsbyDir, 'src');
 
 const spawn = async(
